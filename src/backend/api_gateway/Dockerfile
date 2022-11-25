@@ -1,0 +1,9 @@
+FROM python:3.9
+
+RUN pip install fastapi
+RUN pip install "uvicorn[standard]"
+
+WORKDIR /app
+COPY . /app
+
+CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]

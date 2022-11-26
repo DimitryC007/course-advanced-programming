@@ -1,6 +1,6 @@
 
-from sql_app.db_connection import *
-
+from sql_app.db_context import *
+# need to add a service layer between
 def getTodo(id):
     db_context = DbContext()
     cursor = db_context.get_cursor()

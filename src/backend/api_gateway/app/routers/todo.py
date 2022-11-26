@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from models.todo_model import ToDoModel
 from models.todo_model import ToDoItemModel
+from sql_app.todo_context import *
 from datetime import datetime
 
 router = APIRouter(
@@ -11,16 +12,17 @@ router = APIRouter(
 
 @router.get("/{todo_id}")
 async def get_todo(item_id):
-    todo = ToDoModel()
-    todo.title = "dima here"
-    todo.create_date = datetime.now()
-    todo.items = []
+    # todo = ToDoModel()
+    # todo.title = "dima here"
+    # todo.create_date = datetime.now()
+    # todo.items = []
 
-    todo_item = ToDoItemModel()
-    todo_item.completed = True
-    todo_item.text = 'how much it will take to finish this'
-    todo.items.append(todo_item)
-    return todo
+    # todo_item = ToDoItemModel()
+    # todo_item.completed = True
+    # todo_item.text = 'how much it will take to finish this'
+    # todo.items.append(todo_item)
+
+    return getTodo(item_id)
 
 @router.post("/create")
 async def create_todo(todo: ToDoModel):

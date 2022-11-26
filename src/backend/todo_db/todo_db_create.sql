@@ -17,3 +17,7 @@ CREATE TABLE TodoItems(
     PRIMARY KEY(TodoItemID),
     FOREIGN KEY (`TodoID`) REFERENCES `Todos`(`TodoID`) ON DELETE CASCADE
 );
+
+/*For testing*/
+INSERT INTO Todos(Title,CreateDate)
+VALUES("Some title","2022-11-26 17:23:00.000")

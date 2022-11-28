@@ -1,6 +1,8 @@
 from fastapi import APIRouter
-from models.todo_model import ToDoModel
-from models.todo_model import ToDoItemModel
+# from models.todo_model import ToDoModel
+# from models.todo_model import ToDoItemModel
+from src.backend.models.todo_model import * 
+from src.backend.models.todo_item_model import ToDoItemModel
 from sql_app.todo_repository import *
 from datetime import datetime
 

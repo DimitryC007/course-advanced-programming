@@ -7,6 +7,6 @@ app.include_router(todo.router)
 
 @app.get("/")
 def read_root():
-    return {"Hello": "Dima"}
+    return {"Hello": "ApiGateway"}
 
 

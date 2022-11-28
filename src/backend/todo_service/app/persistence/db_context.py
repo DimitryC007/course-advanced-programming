@@ -1,0 +1,33 @@
+import mysql.connector
+
+class DbContext:
+
+    def __init__(self):
+        self.connection = None
+        self.cursor = None
+
+    def __del__(self):
+            if self.connection.is_connected():
+                self.connection.close()
+                self.cursor.close()
+                print("MySQL connection is closed")    
+
+    def get_cursor(self):
+        return self.__create_connection()
+
+    def __create_connection(self):
+        try:
+            self.connection = mysql.connector.connect(
+                host="127.0.0.1",
+                password="admin",
+                user="root",
+                port="3306",
+                database="TodoDB"
+            )
+            self.cursor = self.connection.cursor(dictionary=True)
+            print("Connection to MySQL DB successful")
+        except Exception as e:
+            print(f"The error '{e}' occurred")
+        
+        return self.cursor
+

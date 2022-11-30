@@ -23,14 +23,14 @@ const TodoInnerItem = ({ index,completed: propsCompleted, id, parentId, text }) 
                 <TextField
                     key={id}
                     id="outlined-textarea"
-                    label={`#${index + 1} item`}
-                    placeholder="enter text"
+                    placeholder=""
                     multiline
                     fullWidth
                     margin="normal"
                     value={text}
                     style={{ textDecoration: completed ? 'line-through' : '' }}
                     disabled={completed}
+                    variant="standard"
                 />
             </Box>
         </Box>)

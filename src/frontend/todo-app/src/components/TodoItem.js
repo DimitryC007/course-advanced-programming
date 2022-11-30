@@ -38,8 +38,8 @@ const TodoItem = ({ id, title, items }) => {
                 }} />
                 <TextField
                     id="standard-textarea"
-                    label="Title"
-                    placeholder="Placeholder"
+                    label=""
+                    placeholder=""
                     multiline
                     variant="standard"
                     fullWidth

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Box from '@mui/material/Box';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import TodoForm from "../components/TodoForm";
 import TodoItem from '../components/TodoItem';
+import Snackbar from '../common/Snackbar'
 
 const style = {
     position: 'absolute',
@@ -22,6 +23,19 @@ const Todo = () => {
     const [open, setOpen] = useState(false);
     const [todo, setTodo] = useState({ id: null, title: '', items: [{ text: '', completed: false, id: 1 }] })
     const [todos, setTodos] = useState([]);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const severity = useRef();
+    const text = useRef();
+
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackbar(false);
+    };
+
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -30,7 +44,7 @@ const Todo = () => {
     };
 
     const addTodoItemInput = () => {
-        if(todo.items.length == 0)
+        if (todo.items.length == 0)
             setTodo({ id: null, title: '', items: [{ text: '', completed: false, id: 1 }] });
         else
             setTodo({ ...todo, items: [...todo.items, { text: '', completed: false, id: todo.items[todo.items.length - 1].id + 1 }] });
@@ -53,14 +67,22 @@ const Todo = () => {
     }
 
     const createTodo = () => {
-        ///TODO: Call to server api 
-        console.log('todo',todo)
-        handleClose();
+        if (!todo.title) {
+            severity.current = 'error';
+            text.current = 'Todo title is required';
+            setOpenSnackbar(true);
+            handleClose();
+            return;
+        }
+        todo.items = todo.items.filter(x=> x.text)
+        console.log('todo', todo)
         setTodos([...todos, todo]);
         setTodo({ title: '', items: [{ text: '', completed: false, id: 1 }] });
+        handleClose();
+        severity.current = 'success';
+        text.current = 'Todo created successfully';
+        setOpenSnackbar(true);
     }
-
-    
 
     return (
         <Box style={{ margin: 50 }}>
@@ -90,6 +112,7 @@ const Todo = () => {
             <Box style={{ display: 'flex' }}>
                 {todos.map(item => <TodoItem {...item} />)}
             </Box>
+            <Snackbar onClose={handleCloseSnackbar} open={openSnackbar} severity={severity.current} text={text.current} />
         </Box>
     )
 }

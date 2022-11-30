@@ -1,5 +1,14 @@
 from persistence.repository import todo_repository
+from models.requests.todo_create_model import ToDoCreateModel
 
-def getTodo(id):
-    # add some logic
-    return todo_repository.getTodo(id)
+def getTodos():
+    return todo_repository.getTodos()
+
+def createTodo(todo:ToDoCreateModel):
+    return todo_repository.createTodo(todo)
+
+def deleteTodo(id):
+    return todo_repository.deleteTodo(id)
+
+def setCompleted(id,completed):
+    return todo_repository.setCompleted(id,completed)    

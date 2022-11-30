@@ -4,7 +4,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import TodoForm from "../components/TodoForm";
-import TodoItem from './TodoItem';
+import TodoItem from '../components/TodoItem';
 
 const style = {
     position: 'absolute',
@@ -20,17 +20,20 @@ const style = {
 
 const Todo = () => {
     const [open, setOpen] = useState(false);
-    const [todo, setTodo] = useState({ title: '', items: [{ text: '', completed: false, id: 1 }] })
+    const [todo, setTodo] = useState({ id: null, title: '', items: [{ text: '', completed: false, id: 1 }] })
     const [todos, setTodos] = useState([]);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
-        setTodo({ title: '', items: [{ text: '', completed: false, id: 1 }] })
+        setTodo({ id: null, title: '', items: [{ text: '', completed: false, id: 1 }] })
         setOpen(false)
     };
 
     const addTodoItemInput = () => {
-        setTodo({ ...todo, items: [...todo.items, { text: '', completed: false, id: todo.items[todo.items.length - 1].id + 1 }] })
+        if(todo.items.length == 0)
+            setTodo({ id: null, title: '', items: [{ text: '', completed: false, id: 1 }] });
+        else
+            setTodo({ ...todo, items: [...todo.items, { text: '', completed: false, id: todo.items[todo.items.length - 1].id + 1 }] });
     }
 
     const deleteTodoItemInput = (id) => {
@@ -51,12 +54,13 @@ const Todo = () => {
 
     const createTodo = () => {
         ///TODO: Call to server api 
+        console.log('todo',todo)
         handleClose();
         setTodos([...todos, todo]);
         setTodo({ title: '', items: [{ text: '', completed: false, id: 1 }] });
-
     }
 
+    
 
     return (
         <Box style={{ margin: 50 }}>
@@ -83,8 +87,8 @@ const Todo = () => {
                     />
                 </Box>
             </Modal>
-            <Box style={{display:'flex'}}>
-                {todos.map(item => <TodoItem {...item}/>)}
+            <Box style={{ display: 'flex' }}>
+                {todos.map(item => <TodoItem {...item} />)}
             </Box>
         </Box>
     )

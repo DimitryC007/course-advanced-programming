@@ -13,8 +13,7 @@ const TodoForm = ({ todo, closeModal, addTodoItemInput, deleteTodoItemInput, onC
         <Box style={{ margin: 10 }}>
             <TextField
                 id="standard-textarea"
-                label="Title"
-                placeholder="Placeholder"
+                label="Todo Title"
                 multiline
                 variant="standard"
                 fullWidth

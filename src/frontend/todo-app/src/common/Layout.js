@@ -1,13 +1,11 @@
 import React from 'react';
-import Sidebar from "./Sidebar"
+import Navbar from "./Navbar"
 
 const Layout = ({ children }) => (
-    <div>
-        <Sidebar/>
-        <div>
-            {children}
-        </div>
-    </div>
+    <>
+        <Navbar />
+        {children}
+    </>
 );
 
 export default Layout;

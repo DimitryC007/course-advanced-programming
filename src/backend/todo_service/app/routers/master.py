@@ -1,26 +1,26 @@
 
 from fastapi import APIRouter
-from models.todo_model import ToDoModel
+from models.requests.todo_create_model import ToDoCreateModel
 from service import todo_service
-# # from datetime import datetime
 
 router = APIRouter(
     tags=["Todo service"],
     responses={404: {"Todo": "Not found"}},
 )
 
-@router.get("/{todo_id}")
-async def get(item_id):
-    return todo_service.getTodo(item_id)
-
 @router.post("/create")
-async def create(todo: ToDoModel):
-    return todo
+async def create(todo: ToDoCreateModel):
+    return todo_service.createTodo(todo)
 
-@router.put("/update")
-async def update(todo: ToDoModel):
-    return todo
+@router.delete("/{id}")
+async def delete(id):
+    return todo_service.deleteTodo(id)
 
-@router.delete("/{item_id}")
-async def delete(item_id):
-    return item_id
+@router.get("/")
+async def get():
+    return todo_service.getTodos()
+
+@router.put("/setCompleted")
+async def setCompleted(id:int,completed:bool):
+    return todo_service.setCompleted(id,completed)
+

@@ -18,7 +18,7 @@ const TodoItem = ({ id, title, items }) => {
                 border: '1px solid silver',
                 borderRadius: '10px',
                 width: '220px',
-                height: '300px',
+                minHeight: '300px',
                 padding: 20,
                 margin: 20,
                 position: 'relative'

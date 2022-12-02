@@ -1,7 +1,7 @@
 
-from persistence.db_context import *
-from models.requests.todo_create_model import ToDoCreateModel
-from models.responses.todo_response_model import ToDoModel,ToDoItem
+from app.persistence.db_context import *
+from app.models.requests.todo_create_model import ToDoCreateModel
+from app.models.responses.todo_response_model import ToDoModel,ToDoItem
 from datetime import datetime
 from typing import List
 

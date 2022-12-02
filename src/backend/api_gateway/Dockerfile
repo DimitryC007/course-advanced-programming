@@ -1,10 +1,16 @@
 FROM python:3.9
 
-RUN pip install fastapi
-RUN pip install "uvicorn[standard]"
-RUN pip install mysql-connector-python
+# 
+WORKDIR /code
 
-WORKDIR /app
-COPY . /app
+# 
+COPY ./requirements.txt /code/requirements.txt
 
-CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80"]
+# 
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+# 
+COPY ./app /code/app
+
+# 
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

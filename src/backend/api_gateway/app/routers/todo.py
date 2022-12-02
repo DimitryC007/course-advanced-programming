@@ -1,10 +1,8 @@
+
 from fastapi import APIRouter
-# from models.todo_model import ToDoModel
-# from models.todo_model import ToDoItemModel
-from src.backend.models.todo_model import * 
-from src.backend.models.todo_item_model import ToDoItemModel
-from sql_app.todo_repository import *
-from datetime import datetime
+from app.models.requests.todo_create_model import ToDoCreateModel
+import httpx
+
 
 router = APIRouter(
     prefix="/todo",
@@ -12,28 +10,29 @@ router = APIRouter(
     responses={404: {"Todo": "Not found"}},
 )
 
-@router.get("/{todo_id}")
-async def get_todo(item_id):
-    # todo = ToDoModel()
-    # todo.title = "dima here"
-    # todo.create_date = datetime.now()
-    # todo.items = []
-
-    # todo_item = ToDoItemModel()
-    # todo_item.completed = True
-    # todo_item.text = 'how much it will take to finish this'
-    # todo.items.append(todo_item)
-
-    return getTodo(item_id)
+BASE_URL = "http://todoservice:8001"
 
 @router.post("/create")
-async def create_todo(todo: ToDoModel):
-    return todo
+async def create(todo: ToDoCreateModel):
+    async with httpx.AsyncClient() as client:
+        response = await client.post(f'{BASE_URL}/create',data=todo.json() ,content="application/json")
+        return response.json()
 
-@router.put("/update")
-async def update_todo(todo: ToDoModel):
-    return todo
+@router.delete("/{id}")
+async def delete(id):
+    async with httpx.AsyncClient() as client:
+        response = await client.delete(f'{BASE_URL}/{id}')
+        return response.json()
 
-@router.delete("/{item_id}")
-async def delete_todo(item_id):
-    return item_id
+@router.get("/")
+async def get():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(BASE_URL)
+        return response.json()
+
+
+@router.put("/setCompleted")
+async def setCompleted(id:int,completed:bool):
+    async with httpx.AsyncClient() as client:
+        response = await client.put(f'{BASE_URL}/setCompleted?id={id}&completed={completed}')
+        return response.json()

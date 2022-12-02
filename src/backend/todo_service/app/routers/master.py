@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from models.requests.todo_create_model import ToDoCreateModel
-from service import todo_service
+from app.models.requests.todo_create_model import ToDoCreateModel
+from app.service import todo_service
 
 router = APIRouter(
     tags=["Todo service"],

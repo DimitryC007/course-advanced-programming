@@ -22,7 +22,7 @@ class DbContext:
     def __create_connection(self):
         try:
             self.connection = mysql.connector.connect(
-                host="127.0.0.1",
+                host="mysql",
                 password="admin",
                 user="root",
                 port="3306",

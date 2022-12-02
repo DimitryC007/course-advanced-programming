@@ -1,5 +1,5 @@
-from persistence.repository import todo_repository
-from models.requests.todo_create_model import ToDoCreateModel
+from app.persistence.repository import todo_repository
+from app.models.requests.todo_create_model import ToDoCreateModel
 
 def getTodos():
     return todo_repository.getTodos()

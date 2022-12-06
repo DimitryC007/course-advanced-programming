@@ -3,15 +3,17 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import { completeTodoRequest } from "../services/TodoService";
 
-
-const TodoInnerItem = ({ index,completed: propsCompleted, id, parentId, text }) => {
-    console.log(propsCompleted)
+const TodoInnerItem = ({ completed: propsCompleted, id, text }) => {
     const [completed, setCompleted] = useState(propsCompleted);
 
-    const setCompletedValue = (todoId, itemId) => {
-        ///TODO: Call api
-        setCompleted(!completed);
+    const setCompletedValue = async () => {
+        const requestedCompleted = !completed;
+        const completedTodoResponse = await completeTodoRequest(id,requestedCompleted);
+        const { data: isRowsEffected } = completedTodoResponse;
+        if(isRowsEffected)
+            setCompleted(requestedCompleted);
     }
 
     return (

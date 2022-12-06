@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Box from '@mui/material/Box';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Modal from '@mui/material/Modal';
@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import TodoForm from "../components/TodoForm";
 import TodoItem from '../components/TodoItem';
 import Snackbar from '../common/Snackbar'
+import { getTodosRequest, createTodoRequest, deleteTodoRequest } from "../services/TodoService";
 
 const style = {
     position: 'absolute',
@@ -27,6 +28,30 @@ const Todo = () => {
     const severity = useRef();
     const text = useRef();
 
+
+    useEffect(() => {
+        getInitialTodos();
+    }, [])
+
+    const getInitialTodos = async () => {
+        const todosResponse = await getTodosRequest();
+        setTodos(todosResponse.data);
+    }
+
+    const handleDeleteTodo = async (id) => {
+        const deleteTodoResponse = await deleteTodoRequest(id);
+        const { data: isDeleted } = deleteTodoResponse;
+        if (!isDeleted) {
+            severity.current = 'error';
+            text.current = 'Something went wrong';
+            setOpenSnackbar(true);
+        }
+        const filteredTodos = todos.filter(item => item.id != id);
+        setTodos([...filteredTodos]);
+        severity.current = 'success';
+        text.current = 'Todo is deleted successfully';
+        setOpenSnackbar(true);
+    }
 
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -66,7 +91,7 @@ const Todo = () => {
         setTodo({ ...todo, title: text })
     }
 
-    const createTodo = () => {
+    const createTodo = async () => {
         if (!todo.title) {
             severity.current = 'error';
             text.current = 'Todo title is required';
@@ -74,9 +99,10 @@ const Todo = () => {
             handleClose();
             return;
         }
-        todo.items = todo.items.filter(x=> x.text)
-        console.log('todo', todo)
-        setTodos([...todos, todo]);
+        todo.items = todo.items.filter(x => x.text)
+        const createTodoResponse = await createTodoRequest(todo);
+        const { data: createdTodo } = createTodoResponse;
+        setTodos([...todos, createdTodo]);
         setTodo({ title: '', items: [{ text: '', completed: false, id: 1 }] });
         handleClose();
         severity.current = 'success';
@@ -109,8 +135,8 @@ const Todo = () => {
                     />
                 </Box>
             </Modal>
-            <Box style={{ display: 'flex' }}>
-                {todos.map(item => <TodoItem {...item} />)}
+            <Box style={{ display: 'flex', flexWrap: 'wrap' }}>
+                {todos.map(item => <TodoItem handleDeleteTodo={handleDeleteTodo} {...item} />)}
             </Box>
             <Snackbar onClose={handleCloseSnackbar} open={openSnackbar} severity={severity.current} text={text.current} />
         </Box>

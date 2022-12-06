@@ -20,3 +20,16 @@ services:
     restart: always
     ports:
       - '3306:3306'
+
+  react-todo-app:
+    depends_on:
+      - apigateway
+    build:
+      context: ./frontend/todo-app/
+    ports:
+      - "3000:3000"
+    container_name: react-todo-app
+    stdin_open: true
+    volumes:
+       - ./todo-app:/usr/src/app/todo-app
+       - /usr/src/app/todo-app/node_modules

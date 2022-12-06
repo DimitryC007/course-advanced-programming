@@ -8,7 +8,7 @@ from typing import List
 def getTodos():
     db_context = DbContext()
     cursor = db_context.get_cursor()
-    # sql parent query 
+    # sql parent query
     sql_select_parent_query = "SELECT * FROM Todos"
     cursor.execute(sql_select_parent_query)
     records = cursor.fetchall()
@@ -34,7 +34,6 @@ def getTodos():
         todos.append(parentTodo)
 
     return todos
-
 
 def deleteTodo(id):
     db_context = DbContext()
@@ -70,15 +69,29 @@ def createTodo(todo:ToDoCreateModel):
     cursor.executemany(sql_insert_childs_query,sql_insert_childs_values)
     connection.commit()
 
+    sql_select_child_query = "SELECT * FROM TodoItems WHERE TodoID = %s"
+    cursor.execute(sql_select_child_query,(todo.id,))
+    childsRecords = cursor.fetchall()
+    todoChilds = list()
+    for childItem in childsRecords:
+        childTodo = ToDoItem()
+        childTodo.id = childItem["TodoItemID"]
+        childTodo.text = childItem["ItemText"]
+        childTodo.completed = childItem["Completed"]
+        todoChilds.append(childTodo)
+    
+    todo.items = todoChilds    
+    
     return todo
 
 def setCompleted(id , completed):
     db_context = DbContext()
     cursor = db_context.get_cursor()
     connection = db_context.get_connection()
+    completedBit = 1 if completed else 0
     # sql update qeury
-    sql_update_completed_query = "UPDATE TodoItems SET Completed = %s WHERE TodoItemID = %s "
-    cursor.execute(sql_update_completed_query,(completed,id))
+    sql_update_completed_query = "UPDATE TodoItems SET Completed = %s WHERE TodoItemID = %s"
+    cursor.execute(sql_update_completed_query,(completedBit,id))
     connection.commit()
 
-    return cursor.rowcount > 0
+    return True

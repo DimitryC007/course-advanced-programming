@@ -4,11 +4,10 @@ import TextField from '@mui/material/TextField';
 import TodoInnerItem from './TodoInnerItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const TodoItem = ({ id, title, items }) => {
+const TodoItem = ({ id, title, items, handleDeleteTodo }) => {
 
     const onTodoDelete = () => {
-        ///TODO: Api call
-        console.log('need to delete')
+        handleDeleteTodo(id);
     }
 
     return (

@@ -46,7 +46,7 @@ const TodoItem = ({ id, title, items, handleDeleteTodo }) => {
                     value={title}
                 />
                 {items.map((item, index) =>
-                    <TodoInnerItem parentId={id}
+                    <TodoInnerItem
                         index={index}
                         {...item} />)}
 

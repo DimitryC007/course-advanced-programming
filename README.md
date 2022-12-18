@@ -24,6 +24,7 @@ containers:
 - ApiGateway
 - MySql DB
 - Todo Service
+- Client React
 
 ## Diagram
                               +------------+

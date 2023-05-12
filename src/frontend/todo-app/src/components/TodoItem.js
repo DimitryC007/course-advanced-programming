@@ -1,4 +1,4 @@
-import React from "react";
+import React,{Fragment} from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import TodoInnerItem from './TodoInnerItem';
@@ -22,7 +22,7 @@ const TodoItem = ({ id, title, items, handleDeleteTodo }) => {
                 margin: 20,
                 position: 'relative'
             }}>
-            <>
+            <Fragment>
                 <DeleteIcon color="warning" 
                 onClick={onTodoDelete}
                 style={{
@@ -47,11 +47,12 @@ const TodoItem = ({ id, title, items, handleDeleteTodo }) => {
                 />
                 {items.map((item, index) =>
                     <TodoInnerItem
+                        key={index}
                         index={index}
                         {...item} />)}
 
 
-            </>
+            </Fragment>
         </Box>
     )
 }

@@ -10,17 +10,17 @@ const TodoInnerItem = ({ completed: propsCompleted, id, text }) => {
 
     const setCompletedValue = async () => {
         const requestedCompleted = !completed;
-        const completedTodoResponse = await completeTodoRequest(id,requestedCompleted);
+        const completedTodoResponse = await completeTodoRequest(id, requestedCompleted);
         const { data: isRowsEffected } = completedTodoResponse;
-        if(isRowsEffected)
+        if (isRowsEffected)
             setCompleted(requestedCompleted);
     }
 
     return (
         <Box style={{ display: 'flex' }}>
             {completed ?
-                <CheckCircleOutlineIcon sx={{ mt: "30px", mr: "20px" }} color="primary" onClick={() => setCompletedValue(id)} /> :
-                <RadioButtonUncheckedIcon sx={{ mt: "30px", mr: "20px" }} color="warning" onClick={() => setCompletedValue(id)} />}
+                <CheckCircleOutlineIcon data-test-id="checked-circle" sx={{ mt: "30px", mr: "20px" }} color="primary" onClick={() => setCompletedValue(id)} /> :
+                <RadioButtonUncheckedIcon data-test-id="unchecked-circle" sx={{ mt: "30px", mr: "20px" }} color="warning" onClick={() => setCompletedValue(id)} />}
             <Box>
                 <TextField
                     key={id}

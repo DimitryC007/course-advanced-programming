@@ -1,12 +1,13 @@
+import React from 'react';
 import Navigation from "./routes/index";
 import Layout from "./common/Layout";
 import './App.css';
 
 function App() {
   return (
-      <Layout>
+    <Layout>
         {Navigation}
-      </Layout>
+    </Layout>
   );
 }
 

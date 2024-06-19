@@ -5,7 +5,7 @@ from typing import Union, List, Optional
 class ToDoItem(BaseModel):
     text: Optional[str]
     completed: Optional[bool]
-    id: Optional[int]
+    id: Optional[int] = None
 
 class ToDoModel(BaseModel):
     id:Optional[int] = None

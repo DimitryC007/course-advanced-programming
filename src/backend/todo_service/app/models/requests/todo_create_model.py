@@ -3,7 +3,7 @@ from typing import Union, List, Optional
 
 
 class ToDoItem(BaseModel):
-    id: Optional[int]
+    id: Optional[int] = None
     text: Optional[str]
     completed: Optional[bool]
 

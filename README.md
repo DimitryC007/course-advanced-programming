@@ -61,7 +61,7 @@ The Todo application is built with Docker and Docker Compose. The following Dock
 ### Installing
 1. Clone the repository
 2. Navigate to the project directory
-3. Build the Docker images using "docker-comose up" command
+3. Build the Docker images using "docker-compose up" command
 4. Run the containers
 
 ## Usage
